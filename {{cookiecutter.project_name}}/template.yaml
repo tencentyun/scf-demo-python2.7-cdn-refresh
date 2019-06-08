@@ -1,0 +1,26 @@
+Resources:
+  default:
+    Type: TencentCloud::Serverless::Namespace
+    cdn_refresh:
+      Type: TencentCloud::Serverless::Function
+      Properties:
+        CodeUri: ./cdn_refresh
+        Description: This demo uses COS trigger and SCF to refresh CDN automaticly
+        Environment:
+          Variables:
+            ENV_FIRST: env1
+            ENV_SECOND: env2
+        Handler: cdn_refresh.main_handler
+        MemorySize: 128
+        {%- if cookiecutter.runtime == 'Python2.7' %}
+        Runtime: Python2.7
+        {%- elif cookiecutter.runtime == 'Python3.6' %}
+        Runtime: Python3.6
+        {%- else %}
+        Runtime: Python3.6
+        {%- endif %}
+        Timeout: 3
+
+Globals:
+  Function:
+    Timeout: 10
